@@ -23,10 +23,8 @@ log-level: silent # debug / silent
 find-process-mode: always
 proxy_fp: &proxy_fp
   client-fingerprint: chrome
-external-controller: 0.0.0.0:9090 #修改端口后，如使用磁贴请重新正确设置API端口
-external-ui-url: "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip"
-external-ui: "./webroot/Zash/"
-secret: "" # 面板访问密码，如在公网访问建议设置
+external-controller: 0.0.0.0:9090
+external-ui: ./dashboard
 # —————————
 # 健康检查
 p: &p
@@ -49,37 +47,16 @@ p: &p
 A: &A
   filter: "^(?!.*(套餐|重置|剩余|到期|订阅|群|账户|流量|有效期|时间|官网|失联|余额)).*$"
   use:
-  - "1.主要地址"
-  - "2.备用地址"
-  - "3.额外地址"
+  - "快跑"
+  - "雨燕云"
+  - "CF"
 All: &All
   type: url-test
   use:
-  - "1.主要地址"
-  - "2.备用地址"
-  - "3.额外地址"
-proxy-providers:
-  "1.主要地址":
-    <<: *p
-    override:
-      additional-prefix: "Main："
-      <<: *proxy_fp
-    path: "./proxies/1.主要地址.yaml"
-    url: "此处引入您的Clash订阅链接地址"
-  "2.备用地址":
-    <<: *p
-    override:
-      additional-prefix: "Minor："
-      <<: *proxy_fp
-    path: "./proxies/2.备用地址.yaml"
-    url: "此处引入您的Clash订阅链接地址"
-  "3.额外地址":
-    <<: *p
-    override:
-      additional-prefix: "Additi："
-      <<: *proxy_fp
-    path: "./proxies/3.额外地址.yaml"
-    url: "此处引入您的Clash订阅链接地址"
+  - "快跑"
+  - "雨燕云"
+  - "CF"
+  
 # —————————
 # 节点记忆
 profile: # ← 此行位置请勿变动！此为模块更新时备份恢复订阅的【结束标记】 ↑
@@ -189,6 +166,7 @@ proxy_groups: &proxy_groups
       - ALL·美国地区
       - ALL·日本地区
       - ALL·狮城地区
+      - ALL·CF节点
       - ALL·其它地区
       - ⛔️ 禁止·拒绝连接
       - 🌐 本机·本地直连
@@ -207,6 +185,7 @@ proxy-groups:
       - ALL·香港地区  
       - ALL·美国地区
       - ALL·狮城地区
+      - ALL·CF节点
       - ALL·其它地区
       - 🌐 本机·本地直连
   - name: 订阅更新
@@ -323,6 +302,10 @@ proxy-groups:
   - name: ALL·狮城地区
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@main/app/icon/Singapore.svg"
     filter: "(?i)(新加坡|坡|狮城|sg|singapore)"
+    <<: *All
+  - name: ALL·CF节点
+    icon: "https://cdn.jsdelivr.net/gh/baishouzheng/Surfing@main/app/icon/Cloudflare.png"
+    filter: "(?i)(Mia)"
     <<: *All
   - name: ALL·其它地区
     icon: "https://cdn.jsdelivr.net/gh/GitMetaio/Surfing@main/app/icon/Globe.svg"
